@@ -22,7 +22,7 @@ import { Button } from 'components/button';
 
 import clsx from 'clsx';
 
-// hooks
+//hooks
 import { useClickOutside } from '../arrow-button/hooks/useClickOutside';
 
 // style
@@ -37,6 +37,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormSettings) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [optionValue, setOptionValue] =
 		useState<ArticleStateType>(defaultArticleState);
+<<<<<<< HEAD
 	const formElement = useRef<HTMLElement | null>(null);
 
 	const handleToggleOpen = useCallback(() => {
