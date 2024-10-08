@@ -37,7 +37,6 @@ export const ArticleParamsForm = (props: ArticleParamsFormSettings) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [optionValue, setOptionValue] =
 		useState<ArticleStateType>(defaultArticleState);
-<<<<<<< HEAD
 	const formElement = useRef<HTMLElement | null>(null);
 
 	const handleToggleOpen = useCallback(() => {
