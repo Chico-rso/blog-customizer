@@ -1,4 +1,5 @@
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useRef, useState, useCallback } from 'react';
+
 // constants
 import {
 	ArticleStateType,
@@ -36,33 +37,45 @@ export const ArticleParamsForm = (props: ArticleParamsFormSettings) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [optionValue, setOptionValue] =
 		useState<ArticleStateType>(defaultArticleState);
-	const formElement = useRef<HTMLElement>(null);
+	const formElement = useRef<HTMLElement | null>(null);
 
-	const handleToggleOpen = () => {
+	const handleToggleOpen = useCallback(() => {
 		setIsMenuOpen((currentIsOpen) => !currentIsOpen);
-	};
+	}, []);
 
-	const updateFormField = (fieldName: string, value: OptionType) => {
-		setOptionValue((prevState) => ({
-			...prevState,
-			[fieldName]: value,
-		}));
-	};
+	const updateFormField = useCallback(
+		(fieldName: string, value: OptionType) => {
+			setOptionValue((prevState) => ({
+				...prevState,
+				[fieldName]: value,
+			}));
+		},
+		[]
+	);
 
-	const handleChange = (fieldName: string) => (value: OptionType) => {
-		updateFormField(fieldName, value);
-	};
+	const handleChange = useCallback(
+		(fieldName: string) => (value: OptionType) => {
+			updateFormField(fieldName, value);
+		},
+		[updateFormField]
+	);
 
-	const handleReset = (event: FormEvent) => {
-		event.preventDefault();
-		setOptionValue(defaultArticleState);
-		setSiteSettings(defaultArticleState);
-	};
+	const handleReset = useCallback(
+		(event: FormEvent) => {
+			event.preventDefault();
+			setOptionValue(defaultArticleState);
+			setSiteSettings(defaultArticleState);
+		},
+		[setSiteSettings]
+	);
 
-	const handleSubmit = (event: FormEvent) => {
-		event.preventDefault();
-		setSiteSettings(optionValue);
-	};
+	const handleSubmit = useCallback(
+		(event: FormEvent) => {
+			event.preventDefault();
+			setSiteSettings(optionValue);
+		},
+		[optionValue, setSiteSettings]
+	);
 
 	useClickOutside({
 		isOpen: isMenuOpen,
@@ -92,7 +105,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormSettings) => {
 						onChange={handleChange('fontFamilyOption')}
 					/>
 					<RadioGroup
-						name='qwe'
+						name='fontSize'
 						title='Размер шрифта'
 						selected={optionValue.fontSizeOption}
 						options={fontSizeOptions}
