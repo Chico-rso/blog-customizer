@@ -11,9 +11,13 @@ type Story = StoryObj<typeof ArrowButton>;
 
 export const ArrowButtonStory: Story = {
 	render: () => {
+		const handleClick = () => {
+			console.log('ArrowButton clicked!');
+		};
+
 		return (
 			<>
-				<ArrowButton />
+				<ArrowButton isMenuOpen={false} onClick={handleClick} />
 			</>
 		);
 	},
